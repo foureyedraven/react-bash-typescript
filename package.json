@@ -2,35 +2,38 @@
   "name": "react-bash-typescript",
   "version": "1.0.0",
   "description": "A configurable/extendable bash terminal component",
-  "main": "lib/index.js",
-  "jsnext:main": "es/index.js",
+  "main": "lib/index.ts",
+  "jsnext:main": "es/index.ts",
   "scripts": {
     "clean": "rimraf lib dist es",
     "lint": "eslint src tests",
-    "start": "cd demo && node server.js",
+    "copy": "ncp public dist",
     "test": "cross-env BABEL_ENV=commonjs mocha --compilers js:babel-core/register --reporter spec tests/*.js",
-    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
-    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
-    "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack src/index.js dist/js/main.js",
-    "build:demo": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack demo/index.js demo/js/main.js",
-    "build": "npm run build:commonjs && npm run build:es && npm run build:umd",
+    "dev": "npm-run-all --parallel copy dev:client dev:server",
+    "dev:client": "webpack --config ./webpack.config.js --mode development --watch",
+    "dev:server": "webpack-dev-server",
+    "build": "webpack --config ./webpack.config.js --mode production",
+    "build:op": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
     "prepublish": "npm run clean && npm run lint && npm run build"
   },
   "authors": [
+    "foureyedraven <rapior.theresa@gmail.com (https://github.com/foureyedraven)",
     "Zack Argyle <zack.argyle@gmail.com> (https://github.com/zackargyle)"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/zackargyle/react-bash.git"
+    "url": "https://github.com/foureyedraven/react-bash-typescript.git"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.10.5",
     "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+    "@babel/polyfill": "^7.10.4",
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
+    "ajv": "^6.12.3",
     "babel-loader": "^8.1.0",
     "chai": "^3.2.0",
     "cross-env": "^1.0.7",
@@ -41,14 +44,19 @@
     "eslint-plugin-import": "^1.8.1",
     "eslint-plugin-jsx-a11y": "^1.2.3",
     "eslint-plugin-react": "^5.1.1",
+    "html-webpack-plugin": "^4.3.0",
     "mocha": "^8.0.1",
+    "ncp": "^2.0.0",
+    "npm-run-all": "^4.1.5",
     "prop-types": "^15.6.0",
     "react": "^15.6.2",
     "react-addons-test-utils": "^15.1.0",
     "react-dom": "^15.3.0",
     "rimraf": "^2.5.2",
     "sinon": "^1.17.4",
+    "source-map-loader": "^1.0.1",
     "style-loader": "^1.2.1",
+    "ts-loader": "^8.0.1",
     "typescript": "^3.9.7",
     "webpack": "^4.44.0",
     "webpack-cli": "^3.3.12",
@@ -62,9 +70,9 @@
     "shell"
   ],
   "bugs": {
-    "url": "https://github.com/zackargyle/react-bash/issues"
+    "url": "https://github.com/foureyedraven/react-bash-typescript/issues"
   },
-  "npmName": "react-bash",
+  "npmName": "react-bash-typescript",
   "npmFileMap": [
     {
       "basePath": "/dist/",
@@ -79,7 +87,5 @@
     "lib/"
   ],
   "license": "MIT",
-  "dependencies": {
-    "@babel/polyfill": "^7.10.4"
-  }
+  "dependencies": {}
 }

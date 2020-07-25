@@ -1,83 +1,73 @@
-var webpack = require('webpack');
+const path = require('path')
+const webpack = require('webpack')
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
-var env = process.env.NODE_ENV;
-var config = {
-    externals: {
-        react: {
-            root: 'React',
-            commonjs2: 'react',
-            commonjs: 'react',
-            amd: 'react'
-        },
-        'react-dom': {
-            root: 'ReactDOM',
-            commonjs2: 'react-dom',
-            commonjs: 'react-dom',
-            amd: 'react-dom'
-        }
+module.exports = [
+  {
+    mode: 'development',
+    target: 'web',
+    devServer: {
+      contentBase: path.join(__dirname, 'dist')
     },
-    module: {
-        rules: [
-            // // changed from { test: /\.jsx?$/, use: { loader: 'babel-loader' }, exclude: /node_modules/ },
-            // { test: /\.(t|j)sx?$/, use: { loader: 'ts-loader' }, exclude: /node_modules/ },
-            // // addition - add source-map support
-            // { enforce: "pre", test: /\.js$/, exclude: /node_modules/, loader: "source-map-loader" },
-            // {
-            //   test: /\.tsx?$/,
-            //   use: 'ts-loader',
-            //   exclude: /node_modules/,
-            // },
-            {
-              test: /\.jsx?$/,
-              exclude: /node_modules/,
-              use: {
-                loader: 'babel-loader'
-              }
-            },
-            {
-              test: /\.(png|svg|jpg|gif|pdf)$/,
-              use: [
-                {
-                  loader: 'file-loader',
-                  options: {
-                    name: '[name].[ext]'
-                  }
-                }
-              ]
-            },
-            {
-              test: /\.css$/,
-              use: ['style-loader', 'css-loader']
-            }
-          ]
-        // loaders: [
-        //     { test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ }
-        // ]
+    entry: {
+      bundle: [
+        './public/index.ts'
+      ]
+    },
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx']
     },
     output: {
-        library: 'ReactBash',
-        libraryTarget: 'umd'
+      filename: '[name].ts',
+      path: path.resolve(__dirname, 'dist/ts')
     },
-    plugins: [
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(env)
-        })
-    ]
-};
-
-if (env === 'production') {
-    config.plugins.push(
-        new config.optimization.minimize({
-            compressor: {
-                pure_getters: true,
-                unsafe: true,
-                unsafe_comps: true,
-                screw_ie8: true,
-                warnings: false
+    module: {
+      rules: [
+        // changed from { test: /\.jsx?$/, use: { loader: 'babel-loader' }, exclude: /node_modules/ },
+        { test: /\.(t|j)sx?$/, use: { loader: 'ts-loader' }, exclude: /node_modules/ },
+        // addition - add source-map support
+        { enforce: "pre", test: /\.js$/, exclude: /node_modules/, loader: "source-map-loader" },
+        // {
+        //   test: /\.tsx?$/,
+        //   use: 'ts-loader',
+        //   exclude: /node_modules/,
+        // },
+        // {
+        //   test: /\.jsx?$/,
+        //   exclude: /node_modules/,
+        //   use: {
+        //     loader: 'babel-loader'
+        //   }
+        // },
+        {
+          test: /\.(png|svg|jpg|gif|pdf)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]'
+              }
             }
-        })
-    )
-}
-
-module.exports = config;
+          ]
+        },
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader']
+        }
+      ]
+    },
+    // externals: {
+    //   "react": "React",
+    //   "react-dom": "ReactDOM",
+    // },
+    // addition - add source-map support
+    devtool: "source-map",
+    plugins: [
+         //will automatically inject bundle js into ./dist/index.html
+         new HTMLWebpackPlugin({
+             template: './public/index.html', //source
+             filename: 'index.html'  //destination
+         })
+    ]
+  }
+]
