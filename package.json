@@ -2,8 +2,8 @@
   "name": "react-bash-typescript",
   "version": "1.0.0",
   "description": "A configurable/extendable bash terminal component",
-  "main": "lib/index.ts",
-  "jsnext:main": "es/index.ts",
+  "main": "lib/index.js",
+  "jsnext:main": "es/index.js",
   "scripts": {
     "clean": "rimraf lib dist es",
     "lint": "eslint src tests",

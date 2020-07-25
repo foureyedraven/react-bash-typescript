@@ -11,15 +11,15 @@ module.exports = [
     },
     entry: {
       bundle: [
-        './public/index.ts'
+        './public/index.js'
       ]
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx']
     },
     output: {
-      filename: '[name].ts',
-      path: path.resolve(__dirname, 'dist/ts')
+      filename: '[name].js',
+      path: path.resolve(__dirname, 'dist/js')
     },
     module: {
       rules: [

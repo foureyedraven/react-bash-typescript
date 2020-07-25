@@ -12,7 +12,7 @@ const extensions = {
     },
 };
 
-const history: Array<any> = [
+const history = [
     { value: 'Hackers will be high-fived. ( ‘-’)人(ﾟ_ﾟ )' },
     { value: 'Type `help` to begin' },
 ];
