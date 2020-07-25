@@ -1,4 +1,4 @@
-import * as Util from './util.jns';
+import * as Util from './util.js';
 import { Errors } from './const';
 
 const helpCommands = ['clear', 'ls', 'cat', 'mkdir', 'cd', 'pwd', 'echo', 'printenv', 'whoami', 'rm'];

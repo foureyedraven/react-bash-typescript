@@ -1,5 +1,5 @@
 import ReactBash from './component';
-import * as BashUtil from './util.jns';
+import * as BashUtil from './util.js';
 import * as BashConst from './const';
 
 

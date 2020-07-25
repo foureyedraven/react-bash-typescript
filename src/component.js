@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as BaseCommands from './commands';
 import Bash from './bash';
-import Styles from './styles.jns';
+import Styles from './styles.js';
 
 const CTRL_CHAR_CODE = 17;
 const L_CHAR_CODE = 76;

@@ -1,4 +1,4 @@
-import * as Util from './util.jns';
+import * as Util from './util.js';
 import { Errors } from './const';
 import * as BaseCommands from './commands';
 import * as BashParser from './parser';
