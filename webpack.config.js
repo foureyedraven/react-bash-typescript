@@ -17,9 +17,42 @@ var config = {
         }
     },
     module: {
-        loaders: [
-            { test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ }
-        ]
+        rules: [
+            // // changed from { test: /\.jsx?$/, use: { loader: 'babel-loader' }, exclude: /node_modules/ },
+            // { test: /\.(t|j)sx?$/, use: { loader: 'ts-loader' }, exclude: /node_modules/ },
+            // // addition - add source-map support
+            // { enforce: "pre", test: /\.js$/, exclude: /node_modules/, loader: "source-map-loader" },
+            // {
+            //   test: /\.tsx?$/,
+            //   use: 'ts-loader',
+            //   exclude: /node_modules/,
+            // },
+            {
+              test: /\.jsx?$/,
+              exclude: /node_modules/,
+              use: {
+                loader: 'babel-loader'
+              }
+            },
+            {
+              test: /\.(png|svg|jpg|gif|pdf)$/,
+              use: [
+                {
+                  loader: 'file-loader',
+                  options: {
+                    name: '[name].[ext]'
+                  }
+                }
+              ]
+            },
+            {
+              test: /\.css$/,
+              use: ['style-loader', 'css-loader']
+            }
+          ]
+        // loaders: [
+        //     { test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ }
+        // ]
     },
     output: {
         library: 'ReactBash',
@@ -35,7 +68,7 @@ var config = {
 
 if (env === 'production') {
     config.plugins.push(
-        new webpack.optimize.UglifyJsPlugin({
+        new config.optimization.minimize({
             compressor: {
                 pure_getters: true,
                 unsafe: true,
