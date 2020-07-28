@@ -11,7 +11,7 @@ module.exports = [
     },
     entry: {
       bundle: [
-        './public/index.js'
+        './public/index.tsx'
       ]
     },
     resolve: {
@@ -63,7 +63,7 @@ module.exports = [
     // addition - add source-map support
     devtool: "source-map",
     plugins: [
-         //will automatically inject bundle js into ./dist/index.html
+         // will automatically inject bundle js into ./dist/index.html
          new HTMLWebpackPlugin({
              template: './public/index.html', //source
              filename: 'index.html'  //destination

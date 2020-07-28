@@ -13,8 +13,7 @@
     "dev:client": "webpack --config ./webpack.config.js --mode development --watch",
     "dev:server": "webpack-dev-server",
     "build": "webpack --config ./webpack.config.js --mode production",
-    "build:op": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
-    "prepublish": "npm run clean && npm run lint && npm run build"
+    "build:op": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min"
   },
   "authors": [
     "foureyedraven <rapior.theresa@gmail.com (https://github.com/foureyedraven)",
