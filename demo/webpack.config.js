@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
     devtool: "source-map",
     entry: [
-        'babel-polyfill',
+        '@babel/polyfill',
         'webpack-dev-server/client?http://0.0.0.0:3000',
         __dirname + '/index.js'
     ],
@@ -13,10 +13,10 @@ module.exports = {
         publicPath: '/dist/'
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
-                loaders: ['babel-loader'],
+                loader: ['babel-loader'],
                 exclude: /node_modules/
             }
         ]
