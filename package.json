@@ -2,8 +2,8 @@
   "name": "react-bash-typescript",
   "version": "1.0.0",
   "description": "A configurable/extendable bash terminal component",
-  "main": "lib/index.js",
-  "jsnext:main": "es/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rimraf lib dist es",
     "lint": "eslint src tests",
@@ -13,7 +13,9 @@
     "dev:client": "webpack --config ./webpack.config.js --mode development --watch",
     "dev:server": "webpack-dev-server",
     "build": "webpack --config ./webpack.config.js --mode production",
-    "build:op": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min"
+    "build:op": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
+    "publsh": "npx tsc && npm run build && npm link"
   },
   "authors": [
     "foureyedraven <rapior.theresa@gmail.com (https://github.com/foureyedraven)",
@@ -32,6 +34,7 @@
     "@babel/preset-react": "^7.0.0",
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
+    "@types/source-map": "^0.5.2",
     "ajv": "^6.12.3",
     "babel-loader": "^8.1.0",
     "chai": "^3.2.0",
