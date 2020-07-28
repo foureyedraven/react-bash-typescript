@@ -15,7 +15,7 @@
     "build": "webpack --config ./webpack.config.js --mode production",
     "build:op": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
-    "publsh": "npx tsc && npm run build && npm link"
+    "publish": "npx tsc && npm run build && npm link"
   },
   "authors": [
     "foureyedraven <rapior.theresa@gmail.com (https://github.com/foureyedraven)",
@@ -89,5 +89,8 @@
     "lib/"
   ],
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "@types/react": "^16.9.43",
+    "react": "^15.6.2"
+  }
 }
