@@ -39,6 +39,7 @@ BaseStyles.greenCircle = Object.assign({}, circle, {
 BaseStyles.body = {
     flexGrow: 1,
     overflowY: 'scroll',
+    height: 300,
     padding: '10px',
 };
 
@@ -53,7 +54,7 @@ BaseStyles.input = {
     flexGrow: '1',
     fontFamily: 'inherit',
     fontSize: 'inherit',
-    outline: 'none !important',
+    outline: 'none',
     padding: 0,
 };
 
@@ -83,7 +84,7 @@ export default {
             backgroundColor: '#dcdbdb',
         }),
         prefix: Object.assign({}, BaseStyles.prefix, {
-            color: '#5b65fb',
+            color: '#44ee44',
         }),
     }),
 };

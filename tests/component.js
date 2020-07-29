@@ -1,9 +1,11 @@
 import chai from 'chai';
-import { shallow } from 'enzyme';
+import { configure, shallow, render } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import sinon from 'sinon';
-
 import Terminal from '../src/index';
+
+configure({ adapter: new Adapter() });
 
 const baseEvent = { preventDefault: () => {} };
 

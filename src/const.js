@@ -11,9 +11,9 @@ export const Errors = {
 };
 
 export const EnvVariables = {
-    TERM_PROGRAM: 'ReactBash.app',
+    TERM_PROGRAM: 'ReactBashTs.app',
     TERM: 'reactbash-256color',
-    TERM_PROGRAM_VERSION: '1.6.0',
+    TERM_PROGRAM_VERSION: '1.0.0',
     TERM_SESSION_ID: 'w0t0p1:37842145-87D9-4768-BEC3-3684BAF3A964',
     USER: state => state.settings.user.username,
     PATH: '/',

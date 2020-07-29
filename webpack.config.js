@@ -11,7 +11,7 @@ module.exports = [
     },
     entry: {
       bundle: [
-        './public/index.tsx'
+        './public/index.js'
       ]
     },
     resolve: {
@@ -56,10 +56,11 @@ module.exports = [
         }
       ]
     },
-    // externals: {
-    //   "react": "React",
-    //   "react-dom": "ReactDOM",
-    // },
+    // resolves error in finding React, React Dom, and others on build
+    externals: {
+      "react": "React",
+      "react-dom": "ReactDOM",
+    },
     // addition - add source-map support
     devtool: "source-map",
     plugins: [

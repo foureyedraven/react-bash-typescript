@@ -1,14 +1,14 @@
 {
   "name": "react-bash-typescript",
   "version": "1.0.0",
-  "description": "A configurable/extendable bash terminal component",
+  "description": "A configurable/extendable Typescript bash terminal component",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rimraf lib dist es",
     "lint": "eslint src tests",
     "copy": "ncp public dist",
-    "test": "cross-env BABEL_ENV=commonjs mocha --compilers js:babel-core/register --reporter spec tests/*.js",
+    "test": "cross-env BABEL_ENV=commonjs mocha --require @babel/register --reporter spec tests/*.js",
     "dev": "npm-run-all --parallel copy dev:client dev:server",
     "dev:client": "webpack --config ./webpack.config.js --mode development --watch",
     "dev:server": "webpack-dev-server",
@@ -32,6 +32,7 @@
     "@babel/polyfill": "^7.10.4",
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.10.5",
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
     "@types/source-map": "^0.5.2",
@@ -40,7 +41,8 @@
     "chai": "^3.2.0",
     "cross-env": "^1.0.7",
     "css-loader": "^3.6.0",
-    "enzyme": "^2.3.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^2.11.1",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.8.1",
@@ -51,9 +53,9 @@
     "ncp": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "prop-types": "^15.6.0",
-    "react": "^15.6.2",
+    "react": "^16.7.0",
     "react-addons-test-utils": "^15.1.0",
-    "react-dom": "^15.3.0",
+    "react-dom": "^16.9.8",
     "rimraf": "^2.5.2",
     "sinon": "^1.17.4",
     "source-map-loader": "^1.0.1",
@@ -88,9 +90,5 @@
     "es/",
     "lib/"
   ],
-  "license": "MIT",
-  "dependencies": {
-    "@types/react": "^16.9.43",
-    "react": "^15.6.2"
-  }
+  "license": "MIT"
 }

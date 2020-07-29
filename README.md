@@ -1,9 +1,9 @@
 # \<Terminal /\>
 
-[NO LONGER MAINTAINED] ReactBash is a configurable / extendable bash terminal component. It provides an easy way of adding a terminal to your application. The terminal has a few built in base commands, and allows a simple means of extending the understandable commands. It boasts things like autocomplete on tab, previous command navigation, and a test suite you can trust. It is easy to install and get started.
+[FORKED] react-bash-typescript has been updated to work within a Typescript project. It is a configurable / extendable typed bash terminal component. It provides an easy way of adding a terminal to your application. The terminal has a few built in base commands, and allows a simple means of extending the understandable commands. It boasts things like autocomplete on tab, previous command navigation, and a test suite you can trust. It is easy to install and get started.
 
 ```
-npm install --save react-bash
+npm install --save react-bash-typescript
 ```
 
 Try out the [DEMO](http://zackargyle.github.io/react-bash/)
@@ -102,15 +102,9 @@ script         | description
 `npm run test` | run the test suite
 `npm run lint` | run the linter
 
-### Patrons
-* [Derek Stavis](https://github.com/derekstavis)
-
->Be the second to contribute!
+### Thank You
+To [Zack Argyle](https://github.com/zackargyle) for a fun, easy-to-use project to fork and update!
 >✌⊂(✰‿✰)つ✌
-
-**Some ideas for contributions:**
-* Add `grep` command that walks/searches the `structure`
-* Add multiline support / text formatting for `cat`
 
 ## License
 [MIT](http://isekivacenz.mit-license.org/)
