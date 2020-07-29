@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as BaseCommands from './commands';
-import { history, structure, extensions } from './custom'
+import { history, structure, extensions } from './default'
 import Bash from './bash';
 import Styles from './styles.js';
 
@@ -14,7 +14,7 @@ const TAB_CHAR_CODE = 9;
 const noop = () => {};
 
 export default class Terminal extends Component {
-    constructor({ prefix }) {
+    constructor({ extensions, history, structure, prefix }) {
         super();
         this.Bash = new Bash(extensions);
         this.ctrlPressed = false;
@@ -26,11 +26,25 @@ export default class Terminal extends Component {
         };
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
-        this.input = React.createRef(); //
+        this.input = React.createRef();
     }
 
     componentDidMount() {
         this.input.current.focus();
+    }
+
+    getDerivedStateFromProps({ extensions, structure, history }) {
+        const updatedState = {};
+        if (structure) {
+            updatedState.structure = Object.assign({}, structure);
+        }
+        if (history) {
+            updatedState.history = history.slice();
+        }
+        if (extensions) {
+            this.Bash.commands = Object.assign({}, extensions, BaseCommands);
+        }
+        this.setState(updatedState);
     }
 
     /*
@@ -109,11 +123,11 @@ export default class Terminal extends Component {
         }
     }
 
-    handleSubmit(evt) {
-        evt.preventDefault();
+    handleSubmit(e) {
+        e.preventDefault();
 
         // Execute command
-        const input = evt.target[0].value;
+        const input = e.target[0].value;
         const newState = this.Bash.execute(input, this.state);
         this.setState(newState);
         this.input.current.value = '';
@@ -141,7 +155,7 @@ export default class Terminal extends Component {
                 </div>
                 <div style={style.body} onClick={() => this.input.current.focus()}>
                     {history.map(this.renderHistoryItem(style))}
-                    <form onSubmit={evt => this.handleSubmit(evt)} style={style.form}>
+                    <form onSubmit={e => this.handleSubmit(e)} style={style.form}>
                         <span style={style.prefix}>{`${prefix} ~${cwd} $`}</span>
                         <input
                           autoComplete="off"

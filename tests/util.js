@@ -112,7 +112,7 @@ describe('util method', () => {
 
         it('should return the static env variables', () => {
             const envVariables = Util.getEnvVariables(state);
-            chai.assert.strictEqual(envVariables.TERM_PROGRAM, 'ReactBash.app');
+            chai.assert.strictEqual(envVariables.TERM_PROGRAM, 'ReactBashTs.app');
         });
 
         it('should return the dynamic env variables', () => {
