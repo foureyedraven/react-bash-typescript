@@ -71,11 +71,13 @@
     "react-component",
     "bash",
     "terminal",
-    "shell"
+    "shell",
+    "typescript"
   ],
   "bugs": {
     "url": "https://github.com/foureyedraven/react-bash-typescript/issues"
   },
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "npmName": "react-bash-typescript",
   "npmFileMap": [
     {
