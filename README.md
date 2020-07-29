@@ -1,6 +1,6 @@
 # \<Terminal /\>
 
-[FORKED] react-bash-typescript updates ReactBash to work within a Typescript project and use React 16. It is a configurable / extendable typed bash terminal component. It provides an easy way of adding a terminal to your application. The terminal has a few built in base commands, and allows a simple means of extending the understandable commands. It boasts things like autocomplete on tab, previous command navigation, and a test suite you can trust. It is easy to install and get started.
+[FORKED] react-bash-typescript updates [ReactBash](https://github.com/zackargyle/react-bash) to work within a Typescript project and use React 16. It is a configurable / extendable typed bash terminal component. It provides an easy way of adding a terminal to your application. The terminal has a few built in base commands, and allows a simple means of extending the understandable commands. It boasts things like autocomplete on tab, previous command navigation, and a test suite you can trust. It is easy to install and get started.
 
 ```
 npm install --save react-bash-typescript
