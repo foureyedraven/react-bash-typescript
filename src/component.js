@@ -23,10 +23,13 @@ export default class Terminal extends Component {
             history: history.slice(),
             structure: Object.assign({}, structure),
             cwd: '',
+            loading: false,
         };
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.input = React.createRef();
+        this.body = React.createRef()
+        this.interval;
     }
 
     componentDidMount() {
@@ -55,10 +58,24 @@ export default class Terminal extends Component {
     }
 
     /*
-     * Keep input in view on change
+     * Keep input in view at bottom on change
      */
-    componentDidUpdate() {
-        // this.input.current.scrollIntoView();
+    componentDidUpdate(prevProps, prevState) {
+        this.body.current.scrollTo(0, this.body.current.scrollHeight)
+        if (prevState.loading !== this.state.loading ) {
+            if (this.state.loading) {
+                this.renderLoadingAnimation()
+            } else {
+                this.clearLoadingAnimation()
+            }
+        }
+        if (prevProps.apiResults !== this.props.apiResults) {
+            const value = this.props.apiResults.pop()
+            this.setState({
+                history: this.state.history.concat({ value }),
+                loading: false
+            })
+        }
     }
 
     /*
@@ -123,14 +140,35 @@ export default class Terminal extends Component {
         }
     }
 
+    renderLoadingAnimation() {
+        this.ticker()
+        setTimeout(() => {
+            this.setState({ loading: false })
+        }, 5000)
+    }
+
+    ticker = () => {
+        this.interval = setInterval(() => {
+            this.input.current.value += '.'
+        }, 200)}
+
+    clearLoadingAnimation() {
+        this.input.current.value = ''
+        clearInterval(this.interval)
+    }
+
     handleSubmit(e) {
         e.preventDefault();
+        this.props.getTerminalInput(e.target[0].value)
+        // Prevent user interaction on loading
+        if (this.state.loading) { return }
 
         // Execute command
         const input = e.target[0].value;
         const newState = this.Bash.execute(input, this.state);
         this.setState(newState);
         this.input.current.value = '';
+        // this.setState({ loading: true })
     }
 
     renderHistoryItem(style) {
@@ -153,7 +191,7 @@ export default class Terminal extends Component {
                     <span style={style.yellowCircle} onClick={onMinimize}></span>
                     <span style={style.greenCircle} onClick={onExpand}></span>
                 </div>
-                <div style={style.body} onClick={() => this.input.current.focus()}>
+                <div ref={this.body} style={style.body} onClick={() => this.input.current.focus()}>
                     {history.map(this.renderHistoryItem(style))}
                     <form onSubmit={e => this.handleSubmit(e)} style={style.form}>
                         <span style={style.prefix}>{`${prefix} ~${cwd} $`}</span>

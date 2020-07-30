@@ -7,9 +7,10 @@ BaseStyles.ReactBash = {
     fontFamily: '\'Inconsolata\', monospace',
     fontSize: '13px',
     fontWeight: '400',
-    height: '100%',
     overflow: 'hidden',
     textAlign: 'left',
+    position: 'relative',
+    height: 300,
 };
 
 BaseStyles.header = {
@@ -39,8 +40,11 @@ BaseStyles.greenCircle = Object.assign({}, circle, {
 BaseStyles.body = {
     flexGrow: 1,
     overflowY: 'scroll',
-    height: 300,
+    overflowX: 'wrap',
+    scrollPaddingBottom: '10px',
     padding: '10px',
+    position: 'relative',
+    height: '100%'
 };
 
 BaseStyles.form = {
