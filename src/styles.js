@@ -10,7 +10,7 @@ BaseStyles.ReactBash = {
     overflow: 'hidden',
     textAlign: 'left',
     position: 'relative',
-    height: 300,
+    height: 400,
 };
 
 BaseStyles.header = {

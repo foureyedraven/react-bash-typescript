@@ -32,10 +32,6 @@ export default class Terminal extends Component {
         this.interval;
     }
 
-    componentDidMount() {
-        this.input.current.focus();
-    }
-
     getDerivedStateFromProps({ extensions, structure, history }) {
         const updatedState = {};
         if (structure) {
@@ -57,11 +53,11 @@ export default class Terminal extends Component {
         return (this.state !== nextState) || (this.props !== nextProps);
     }
 
-    /*
-     * Keep input in view at bottom on change
-     */
     componentDidUpdate(prevProps, prevState) {
+        // Keep input in view when interacting with component.
         this.body.current.scrollTo(0, this.body.current.scrollHeight)
+
+        // Handle changes in Terminal component
         if (prevState.loading !== this.state.loading ) {
             if (this.state.loading) {
                 this.renderLoadingAnimation()
@@ -69,11 +65,11 @@ export default class Terminal extends Component {
                 this.clearLoadingAnimation()
             }
         }
-        if (prevProps.apiResults !== this.props.apiResults) {
-            const value = this.props.apiResults.pop()
+        if (prevProps.message !== this.props.message) {
+            const value = this.props.message
             this.setState({
                 history: this.state.history.concat({ value }),
-                loading: false
+                loading: false,
             })
         }
     }
@@ -159,7 +155,9 @@ export default class Terminal extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        // Send terminal input to parent component
         this.props.getTerminalInput(e.target[0].value)
+
         // Prevent user interaction on loading
         if (this.state.loading) { return }
 
@@ -168,7 +166,6 @@ export default class Terminal extends Component {
         const newState = this.Bash.execute(input, this.state);
         this.setState(newState);
         this.input.current.value = '';
-        // this.setState({ loading: true })
     }
 
     renderHistoryItem(style) {
@@ -176,7 +173,7 @@ export default class Terminal extends Component {
             const prefix = item.hasOwnProperty('cwd') ? (
                 <span style={style.prefix}>{`${this.props.prefix} ~${item.cwd} $`}</span>
             ) : undefined;
-            return <div data-test-id={`history-${key}`} key={key} >{prefix}{item.value}</div>;
+            return <div data-test-id={`history-${key}`} key={key} ><pre style={{ margin: 0 }}>{prefix}{item.value}</pre></div>;
         };
     }
 
