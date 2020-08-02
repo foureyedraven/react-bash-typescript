@@ -71,6 +71,7 @@ export default class Terminal extends Component {
                 history: this.state.history.concat({ value }),
                 loading: false,
             })
+            this.props.resetMessage()
         }
     }
 
@@ -78,6 +79,7 @@ export default class Terminal extends Component {
      * Forward the input along to the Bash autocompleter. If it works,
      * update the input.
      */
+    // keydown returns undefined
     attemptAutocomplete() {
         const input = this.input.current.value;
         const suggestion = this.Bash.autocomplete(input, this.state);
