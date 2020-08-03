@@ -1,6 +1,6 @@
 {
   "name": "react-bash-typescript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A configurable/extendable Typescript bash terminal component",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -77,7 +77,6 @@
   "bugs": {
     "url": "https://github.com/foureyedraven/react-bash-typescript/issues"
   },
-  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "npmName": "react-bash-typescript",
   "npmFileMap": [
     {
