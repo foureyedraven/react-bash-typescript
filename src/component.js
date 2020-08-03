@@ -57,9 +57,17 @@ export default class Terminal extends Component {
         // Keep input in view when interacting with component.
         this.body.current.scrollTo(0, this.body.current.scrollHeight)
 
-        // Handle changes in Terminal component
+        // Handle loading animation in Terminal component
         if (prevState.loading !== this.state.loading ) {
             if (this.state.loading) {
+                this.renderLoadingAnimation()
+            } else {
+                this.clearLoadingAnimation()
+            }
+        }
+        // Handle parent request for loading animation
+        if (prevProps.loading !== this.props.loading) {
+            if (this.props.loading) {
                 this.renderLoadingAnimation()
             } else {
                 this.clearLoadingAnimation()
@@ -80,6 +88,9 @@ export default class Terminal extends Component {
      * update the input.
      */
     // keydown returns undefined
+    // is there a better way to show empty lines
+    // but to also not have empty histories?
+    // autocomplete should filter history to not have empty lines
     attemptAutocomplete() {
         const input = this.input.current.value;
         const suggestion = this.Bash.autocomplete(input, this.state);
