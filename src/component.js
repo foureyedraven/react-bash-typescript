@@ -23,14 +23,13 @@ export default class Terminal extends Component {
             history: history.slice(),
             structure: Object.assign({}, structure),
             cwd: '',
+            loading: false,
         };
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.input = React.createRef();
-    }
-
-    componentDidMount() {
-        this.input.current.focus();
+        this.body = React.createRef()
+        this.interval;
     }
 
     getDerivedStateFromProps({ extensions, structure, history }) {
@@ -54,17 +53,44 @@ export default class Terminal extends Component {
         return (this.state !== nextState) || (this.props !== nextProps);
     }
 
-    /*
-     * Keep input in view on change
-     */
-    componentDidUpdate() {
-        // this.input.current.scrollIntoView();
+    componentDidUpdate(prevProps, prevState) {
+        // Keep input in view when interacting with component.
+        this.body.current.scrollTo(0, this.body.current.scrollHeight)
+
+        // Handle loading animation in Terminal component
+        if (prevState.loading !== this.state.loading ) {
+            if (this.state.loading) {
+                this.renderLoadingAnimation()
+            } else {
+                this.clearLoadingAnimation()
+            }
+        }
+        // Handle parent request for loading animation
+        if (prevProps.loading !== this.props.loading) {
+            if (this.props.loading) {
+                this.renderLoadingAnimation()
+            } else {
+                this.clearLoadingAnimation()
+            }
+        }
+        if (prevProps.message !== this.props.message) {
+            const value = this.props.message
+            this.setState({
+                history: this.state.history.concat({ value }),
+                loading: false,
+            })
+            this.props.resetMessage()
+        }
     }
 
     /*
      * Forward the input along to the Bash autocompleter. If it works,
      * update the input.
      */
+    // keydown returns undefined
+    // is there a better way to show empty lines
+    // but to also not have empty histories?
+    // autocomplete should filter history to not have empty lines
     attemptAutocomplete() {
         const input = this.input.current.value;
         const suggestion = this.Bash.autocomplete(input, this.state);
@@ -123,8 +149,30 @@ export default class Terminal extends Component {
         }
     }
 
+    renderLoadingAnimation() {
+        this.ticker()
+        setTimeout(() => {
+            this.setState({ loading: false })
+        }, 5000)
+    }
+
+    ticker = () => {
+        this.interval = setInterval(() => {
+            this.input.current.value += '.'
+        }, 200)}
+
+    clearLoadingAnimation() {
+        this.input.current.value = ''
+        clearInterval(this.interval)
+    }
+
     handleSubmit(e) {
         e.preventDefault();
+        // Send terminal input to parent component
+        this.props.getTerminalInput(e.target[0].value)
+
+        // Prevent user interaction on loading
+        if (this.state.loading) { return }
 
         // Execute command
         const input = e.target[0].value;
@@ -138,7 +186,7 @@ export default class Terminal extends Component {
             const prefix = item.hasOwnProperty('cwd') ? (
                 <span style={style.prefix}>{`${this.props.prefix} ~${item.cwd} $`}</span>
             ) : undefined;
-            return <div data-test-id={`history-${key}`} key={key} >{prefix}{item.value}</div>;
+            return <div data-test-id={`history-${key}`} key={key} ><pre style={{ margin: 0 }}>{prefix}{item.value}</pre></div>;
         };
     }
 
@@ -153,7 +201,7 @@ export default class Terminal extends Component {
                     <span style={style.yellowCircle} onClick={onMinimize}></span>
                     <span style={style.greenCircle} onClick={onExpand}></span>
                 </div>
-                <div style={style.body} onClick={() => this.input.current.focus()}>
+                <div ref={this.body} style={style.body} onClick={() => this.input.current.focus()}>
                     {history.map(this.renderHistoryItem(style))}
                     <form onSubmit={e => this.handleSubmit(e)} style={style.form}>
                         <span style={style.prefix}>{`${prefix} ~${cwd} $`}</span>
